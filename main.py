@@ -34,22 +34,22 @@ def stylings():
     #Delete Tab
     Delete(deleteTab)
 
-def Create(createTab):
+def Create(createTab):#New/Update tab gui
     site=tk.StringVar()
     passwrd=tk.StringVar()
     Label(createTab, text="AccountName:").grid(row=0, column=0)
     Label(createTab, text="Password").grid(row=1, column=0)
-    siteName = Entry(createTab,textvariable=site).grid(row=0, column=1)
-    passWord = Entry(createTab,textvariable=passwrd).grid(row=1, column=1)
+    siteName = Entry(createTab,textvariable=site).grid(row=0, column=1)#saving site name
+    passWord = Entry(createTab,textvariable=passwrd).grid(row=1, column=1)#saving password
     submitbutton=Button(createTab,text="Create",command=lambda :CreateFunc(site.get(),passwrd.get())).grid(row=2,column=0)
 
-def View(viewTab):
+def View(viewTab):#View tab gui
     site=tk.StringVar()
     Label(viewTab, text="AccountName:").grid(row=0, column=0)
     siteName = Entry(viewTab,textvariable=site).grid(row=0, column=1)
     viewbutton = Button(viewTab, text="View",command=lambda :ViewFunc(site.get())).grid(row=1, column=0)
 
-def Delete(deleteTab):
+def Delete(deleteTab):#Delete tab gui
     site = tk.StringVar()
     Label(deleteTab, text="AccountName:").grid(row=0, column=0)
     siteName = Entry(deleteTab,textvariable=site).grid(row=0, column=1)
@@ -60,36 +60,36 @@ def DeleteFunc(siteName):
 
     for key in data.keys():
         if key==siteName:
-            del data[siteName]
+            del data[siteName]#delete password
             txt="Deleted"
             break
         else:
             txt="Account not found"
-    else:
+    else:#If file is empty
         txt="Account not found"
     popUp(txt,"DeleteTab")
 
-def ViewFunc(siteName):
+def ViewFunc(siteName):#view passwords
 
     for key in data.keys():
         if key == siteName:
-            txt = f"Password:{encryptdcrypt(data[siteName])}"
+            txt = f"Password:{encryptdcrypt(data[siteName])}"#decrypt and show
             break
-        else:
+        else:#if the account not found
             txt = "Account not found"
-    else:
+    else:#If the file is empty
         txt="Account not found"
     popUp(txt, "ViewTab")
 
-def CreateFunc(siteName,passwrd):
+def CreateFunc(siteName,passwrd):#Save and update new passwords
     encrypted=encryptdcrypt(passwrd)
     data[siteName]=encrypted
-    popUp("Password saved","cerateTab")
+    popUp("Password saved","createTab")
 
-def popUp(txt,windowname):
+def popUp(txt,windowname):#For the popup window
     tkinter.messagebox.showinfo(windowname,txt)
 
-def encryptdcrypt(msg):
+def encryptdcrypt(msg):#Encryption
     i=len(msg)-1
     trans=''
     while i>=0:
@@ -99,17 +99,16 @@ def encryptdcrypt(msg):
 
 if __name__=="__main__":
     txt=""
-    Key="Lioncat2002"
     try:
         f=open("passwrd.json",'r')
         data=json.load(f)
         print(data)
         f.close()
-    except(FileNotFoundError):
+    except(FileNotFoundError):#If file is not found
         data={}
-        f = open("passwrd.json", 'w')
+        f = open("passwrd.json", 'w')#Open new file
         f.close()
-    except(json.decoder.JSONDecodeError):
+    except(json.decoder.JSONDecodeError):#If the file is not readable
         data={}
     f=open("passwrd.json",'w')
     window = tk.Tk()
