@@ -8,7 +8,7 @@ def passWin():
     #Window init start
 
     window.title("LcPass")
-    window.geometry("300x200")
+    window.geometry("250x100")
     stylings()
     #Window init end
 
@@ -64,28 +64,42 @@ def DeleteFunc(siteName):
             txt="Deleted"
             break
         else:
-            txt="Site not found"
+            txt="Account not found"
+    else:
+        txt="Account not found"
     popUp(txt,"DeleteTab")
 
 def ViewFunc(siteName):
 
     for key in data.keys():
         if key == siteName:
-            txt = f"Password:{data[siteName]}"
+            txt = f"Password:{encryptdcrypt(data[siteName])}"
             break
         else:
-            txt = "Site not found"
+            txt = "Account not found"
+    else:
+        txt="Account not found"
     popUp(txt, "ViewTab")
 
 def CreateFunc(siteName,passwrd):
-    data[siteName]=passwrd
+    encrypted=encryptdcrypt(passwrd)
+    data[siteName]=encrypted
     popUp("Password saved","cerateTab")
 
 def popUp(txt,windowname):
     tkinter.messagebox.showinfo(windowname,txt)
 
+def encryptdcrypt(msg):
+    i=len(msg)-1
+    trans=''
+    while i>=0:
+        trans=trans+msg[i]
+        i=i-1
+    return trans
+
 if __name__=="__main__":
     txt=""
+    Key="Lioncat2002"
     try:
         f=open("passwrd.json",'r')
         data=json.load(f)
