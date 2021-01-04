@@ -4,5 +4,5 @@
 <br>This is just my high school project</br>
 <br>Warning: Not to be used for daily life because of the simple encryption method</br>
 # Requirements
-1.Python 3.8 or newer installed
-2.tkinter library
+<br>1.Python 3.8 or newer installed</br>
+<br>2.tkinter library</br>
